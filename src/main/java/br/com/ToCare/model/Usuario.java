@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name = "cuidador")
+@Table(name = "usuario")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cuidador {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,4 +37,11 @@ public class Cuidador {
 
     @Column(nullable = false)
     private String cep;
+
+    @Column(nullable = false)
+    private Double latitude;
+
+    @Column(nullable = false)
+    private Double longitude;
+
 }

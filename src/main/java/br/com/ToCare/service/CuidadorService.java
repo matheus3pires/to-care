@@ -1,50 +1,52 @@
 package br.com.ToCare.service;
 
-import br.com.ToCare.dto.CuidadorDTO;
-import br.com.ToCare.dto.CuidadorRequest;
 import br.com.ToCare.model.Cuidador;
 import br.com.ToCare.repository.CuidadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CuidadorService {
 
     @Autowired
-    private CuidadorRepository repository;
+    private CuidadorRepository cuidadorRepository;
 
-    public CuidadorDTO criar(CuidadorRequest request) {
-        Cuidador cuidador = new Cuidador(null, request.getNome(), request.getCpfCnpj(), request.getIdade(),
-                                         request.getEmail(), request.getTelefone(), request.getDescricao(), "cuidador");
-        cuidador = repository.save(cuidador);
-        return new CuidadorDTO(cuidador.getId(), cuidador.getNome(), cuidador.getCpfCnpj(), cuidador.getIdade(),
-                               cuidador.getEmail(), cuidador.getTelefone(), cuidador.getDescricao());
+    public List<Cuidador> getAllCuidadores() {
+        return cuidadorRepository.findAll();
     }
 
-    public CuidadorDTO buscarPorId(UUID id) {
-        return repository.findById(id)
-                         .map(cuidador -> new CuidadorDTO(cuidador.getId(), cuidador.getNome(), cuidador.getCpfCnpj(),
-                                                          cuidador.getIdade(), cuidador.getEmail(), cuidador.getTelefone(),
-                                                          cuidador.getDescricao()))
-                         .orElseThrow(() -> new RuntimeException("Cuidador não encontrado"));
+    public ResponseEntity<Cuidador> getCuidadorById(UUID id) {
+        Optional<Cuidador> cuidador = cuidadorRepository.findById(id);
+        return cuidador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public List<CuidadorDTO> listar() {
-        return repository.findAll()
-                         .stream()
-                         .map(cuidador -> new CuidadorDTO(cuidador.getId(), cuidador.getNome(), cuidador.getCpfCnpj(),
-                                                          cuidador.getIdade(), cuidador.getEmail(), cuidador.getTelefone(),
-                                                          cuidador.getDescricao()))
-                         .collect(Collectors.toList());
+    public Cuidador createCuidador(Cuidador cuidador) {
+        return cuidadorRepository.save(cuidador);
     }
 
-    public void deletar(UUID id) {
-        if (!repository.existsById(id)) {
-            throw new RuntimeException("Cuidador não encontrado");
+    public ResponseEntity<Cuidador> updateCuidador(UUID id, Cuidador cuidador) {
+        if (!cuidadorRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
         }
-        repository.deleteById(id);
+        cuidador.setId(id);
+        return ResponseEntity.ok(cuidadorRepository.save(cuidador));
+    }
+
+    public ResponseEntity<Void> deleteCuidador(UUID id) {
+        if (!cuidadorRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        cuidadorRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<Cuidador> getCuidadorByCpfCnpj(String cpfCnpj) {
+        Cuidador cuidador = cuidadorRepository.findByCpfCnpj(cpfCnpj);
+        return cuidador != null ? ResponseEntity.ok(cuidador) : ResponseEntity.notFound().build();
     }
 }
