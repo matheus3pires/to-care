@@ -16,20 +16,20 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> getAllUsuarios() {
+    public List<Usuario> buscarTodosUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    public ResponseEntity<Usuario> getUsuarioById(UUID id) {
+    public ResponseEntity<Usuario> buscarUsuarioPorId(UUID id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public Usuario createUsuario(Usuario usuario) {
+    public Usuario salvarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public ResponseEntity<Usuario> updateUsuario(UUID id, Usuario usuario) {
+    public ResponseEntity<Usuario> atualizarUsuario(UUID id, Usuario usuario) {
         if (!usuarioRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -37,7 +37,7 @@ public class UsuarioService {
         return ResponseEntity.ok(usuarioRepository.save(usuario));
     }
 
-    public ResponseEntity<Void> deleteUsuario(UUID id) {
+    public ResponseEntity<Void> deletarUsuario(UUID id) {
         if (!usuarioRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -45,7 +45,7 @@ public class UsuarioService {
         return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<Usuario> getUsuarioByCpfCnpj(String cpfCnpj) {
+    public ResponseEntity<Usuario> buscarUsuarioPorByCpfCnpj(String cpfCnpj) {
         Usuario usuario = usuarioRepository.findByCpfCnpj(cpfCnpj);
         return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
     }

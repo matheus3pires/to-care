@@ -17,32 +17,32 @@ public class CuidadorController {
     private CuidadorService cuidadorService;
 
     @GetMapping
-    public List<Cuidador> getAllCuidadores() {
-        return cuidadorService.getAllCuidadores();
+    public List<Cuidador> buscarTodosCuidadores() {
+        return cuidadorService.buscarTodosCuidadores();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cuidador> getCuidadorById(@PathVariable UUID id) {
-        return cuidadorService.getCuidadorById(id);
+    public ResponseEntity<Cuidador> buscarCuidadorPorId(@PathVariable UUID id) {
+        return cuidadorService.buscarCuidadorPorId(id);
     }
 
     @PostMapping
     public Cuidador createCuidador(@RequestBody Cuidador cuidador) {
-        return cuidadorService.createCuidador(cuidador);
+        return cuidadorService.salvarCuidador(cuidador);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cuidador> updateCuidador(@PathVariable UUID id, @RequestBody Cuidador cuidador) {
-        return cuidadorService.updateCuidador(id, cuidador);
+    public ResponseEntity<Cuidador> atualizarCuidador(@PathVariable UUID id, @RequestBody Cuidador cuidador) {
+        return cuidadorService.atualizarCuidador(id, cuidador);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCuidador(@PathVariable UUID id) {
-        return cuidadorService.deleteCuidador(id);
+    public ResponseEntity<Void> deletarCuidador(@PathVariable UUID id) {
+        return cuidadorService.deletarCuidador(id);
     }
 
     @GetMapping("/cpf-cnpj/{cpfCnpj}")
     public ResponseEntity<Cuidador> getCuidadorByCpfCnpj(@PathVariable String cpfCnpj) {
-        return cuidadorService.getCuidadorByCpfCnpj(cpfCnpj);
+        return cuidadorService.buscarCuidadorPorCpfCnpj(cpfCnpj);
     }
 }

@@ -17,32 +17,32 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioService.getAllUsuarios();
+    public List<Usuario> buscarTodosUsuarios() {
+        return usuarioService.buscarTodosUsuarios();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable UUID id) {
-        return usuarioService.getUsuarioById(id);
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable UUID id) {
+        return usuarioService.buscarUsuarioPorId(id);
     }
 
     @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.createUsuario(usuario);
+    public Usuario salvarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.salvarUsuario(usuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable UUID id, @RequestBody Usuario usuario) {
-        return usuarioService.updateUsuario(id, usuario);
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable UUID id, @RequestBody Usuario usuario) {
+        return usuarioService.atualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable UUID id) {
-        return usuarioService.deleteUsuario(id);
+        return usuarioService.deletarUsuario(id);
     }
 
     @GetMapping("/cpf-cnpj/{cpfCnpj}")
     public ResponseEntity<Usuario> getUsuarioByCpfCnpj(@PathVariable String cpfCnpj) {
-        return usuarioService.getUsuarioByCpfCnpj(cpfCnpj);
+        return usuarioService.buscarUsuarioPorByCpfCnpj(cpfCnpj);
     }
 }

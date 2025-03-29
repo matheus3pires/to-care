@@ -16,20 +16,20 @@ public class ContratoService {
     @Autowired
     private ContratoRepository contratoRepository;
 
-    public List<Contrato> getAllContratos() {
+    public List<Contrato> buscarTodosContratos() {
         return contratoRepository.findAll();
     }
 
-    public ResponseEntity<Contrato> getContratoById(UUID id) {
+    public ResponseEntity<Contrato> buscarContratoPorById(UUID id) {
         Optional<Contrato> contrato = contratoRepository.findById(id);
         return contrato.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public Contrato createContrato(Contrato contrato) {
+    public Contrato salvarContrato(Contrato contrato) {
         return contratoRepository.save(contrato);
     }
 
-    public ResponseEntity<Contrato> updateContrato(UUID id, Contrato contrato) {
+    public ResponseEntity<Contrato> atualizarContrato(UUID id, Contrato contrato) {
         if (!contratoRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -37,7 +37,7 @@ public class ContratoService {
         return ResponseEntity.ok(contratoRepository.save(contrato));
     }
 
-    public ResponseEntity<Void> deleteContrato(UUID id) {
+    public ResponseEntity<Void> deletarContrato(UUID id) {
         if (!contratoRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -45,11 +45,11 @@ public class ContratoService {
         return ResponseEntity.noContent().build();
     }
 
-    public List<Contrato> getContratosByUsuarioId(UUID usuarioId) {
+    public List<Contrato> buscarContratosPorUsuarioId(UUID usuarioId) {
         return contratoRepository.findByUsuarioId(usuarioId);
     }
 
-    public List<Contrato> getContratosByCuidadorId(UUID cuidadorId) {
+    public List<Contrato> buscarContratosPorCuidadorId(UUID cuidadorId) {
         return contratoRepository.findByCuidadorId(cuidadorId);
     }
 }

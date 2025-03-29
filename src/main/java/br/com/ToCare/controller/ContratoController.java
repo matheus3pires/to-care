@@ -17,37 +17,37 @@ public class ContratoController {
     private ContratoService contratoService;
 
     @GetMapping
-    public List<Contrato> getAllContratos() {
-        return contratoService.getAllContratos();
+    public List<Contrato> buscarTodosContratos() {
+        return contratoService.buscarTodosContratos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contrato> getContratoById(@PathVariable UUID id) {
-        return contratoService.getContratoById(id);
+    public ResponseEntity<Contrato> buscarContratoPorById(@PathVariable UUID id) {
+        return contratoService.buscarContratoPorById(id);
     }
 
     @PostMapping
-    public Contrato createContrato(@RequestBody Contrato contrato) {
-        return contratoService.createContrato(contrato);
+    public Contrato salvarContrato(@RequestBody Contrato contrato) {
+        return contratoService.salvarContrato(contrato);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contrato> updateContrato(@PathVariable UUID id, @RequestBody Contrato contrato) {
-        return contratoService.updateContrato(id, contrato);
+    public ResponseEntity<Contrato> atualizarContrato(@PathVariable UUID id, @RequestBody Contrato contrato) {
+        return contratoService.atualizarContrato(id, contrato);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContrato(@PathVariable UUID id) {
-        return contratoService.deleteContrato(id);
+    public ResponseEntity<Void> deletarContrato(@PathVariable UUID id) {
+        return contratoService.deletarContrato(id);
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public List<Contrato> getContratosByUsuarioId(@PathVariable UUID usuarioId) {
-        return contratoService.getContratosByUsuarioId(usuarioId);
+    public List<Contrato> buscarContratosPorUsuarioId(@PathVariable UUID usuarioId) {
+        return contratoService.buscarContratosPorUsuarioId(usuarioId);
     }
 
     @GetMapping("/cuidador/{cuidadorId}")
-    public List<Contrato> getContratosByCuidadorId(@PathVariable UUID cuidadorId) {
-        return contratoService.getContratosByCuidadorId(cuidadorId);
+    public List<Contrato> buscarContratosPorCuidadorId(@PathVariable UUID cuidadorId) {
+        return contratoService.buscarContratosPorCuidadorId(cuidadorId);
     }
 }

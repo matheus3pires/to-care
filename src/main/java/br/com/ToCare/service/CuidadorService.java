@@ -16,20 +16,20 @@ public class CuidadorService {
     @Autowired
     private CuidadorRepository cuidadorRepository;
 
-    public List<Cuidador> getAllCuidadores() {
+    public List<Cuidador> buscarTodosCuidadores() {
         return cuidadorRepository.findAll();
     }
 
-    public ResponseEntity<Cuidador> getCuidadorById(UUID id) {
+    public ResponseEntity<Cuidador> buscarCuidadorPorId(UUID id) {
         Optional<Cuidador> cuidador = cuidadorRepository.findById(id);
         return cuidador.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public Cuidador createCuidador(Cuidador cuidador) {
+    public Cuidador salvarCuidador(Cuidador cuidador) {
         return cuidadorRepository.save(cuidador);
     }
 
-    public ResponseEntity<Cuidador> updateCuidador(UUID id, Cuidador cuidador) {
+    public ResponseEntity<Cuidador> atualizarCuidador(UUID id, Cuidador cuidador) {
         if (!cuidadorRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -37,7 +37,7 @@ public class CuidadorService {
         return ResponseEntity.ok(cuidadorRepository.save(cuidador));
     }
 
-    public ResponseEntity<Void> deleteCuidador(UUID id) {
+    public ResponseEntity<Void> deletarCuidador(UUID id) {
         if (!cuidadorRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -45,7 +45,7 @@ public class CuidadorService {
         return ResponseEntity.noContent().build();
     }
 
-    public ResponseEntity<Cuidador> getCuidadorByCpfCnpj(String cpfCnpj) {
+    public ResponseEntity<Cuidador> buscarCuidadorPorCpfCnpj(String cpfCnpj) {
         Cuidador cuidador = cuidadorRepository.findByCpfCnpj(cpfCnpj);
         return cuidador != null ? ResponseEntity.ok(cuidador) : ResponseEntity.notFound().build();
     }
