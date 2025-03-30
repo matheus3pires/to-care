@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/localizacoes")
@@ -34,4 +35,11 @@ public class LocalizacaoController {
         localizacaoService.deletarLocalizacao(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/proximos")
+    public ResponseEntity<List<Localizacao>> buscarUsuariosProximos(@RequestParam Double latitude, @RequestParam Double longitude) {
+        List<Localizacao> proximos = localizacaoService.localizarUsuariosProximos(latitude, longitude);
+        return ResponseEntity.ok(proximos);
+    }
+
 }
