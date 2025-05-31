@@ -19,10 +19,10 @@ public class Localizacao {
     @Id
     private UUID id;
 
-    @Column(nullable = false, precision = 9, scale = 6)
+    @Column(nullable = false, precision = 9)
     private Double latitude;
 
-    @Column(nullable = false, precision = 9, scale = 6)
+    @Column(nullable = false, precision = 9)
     private Double longitude;
 
     @OneToOne
